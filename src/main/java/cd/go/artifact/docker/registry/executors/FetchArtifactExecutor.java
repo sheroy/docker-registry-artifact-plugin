@@ -71,7 +71,19 @@ public class FetchArtifactExecutor implements RequestExecutor {
                 throw new RuntimeException(format("Expecting pulled image digest to be [%s] but it is [%s].", artifactMap.get("digest"), dockerProgressHandler.getDigest()));
             }
 
-            return DefaultGoPluginApiResponse.success("");
+            return DefaultGoPluginApiResponse.success("[\n" +
+                    "        {\n" +
+                    "          \"name\": \"VAR1\",\n" +
+                    "          \"value\": \"VALUE1\",\n" +
+                    "          \"secure\": true\n" +
+                    "        },\n" +
+                    "        {\n" +
+                    "          \"name\": \"VAR2\",\n" +
+                    "          \"value\": \"VALUE2\",\n" +
+                    "          \"secure\": false\n" +
+                    "        }\n" +
+                    "      ]");
+            
         } catch (Exception e) {
             final String message = format("Failed pull docker image: %s", e);
             consoleLogger.error(message);
